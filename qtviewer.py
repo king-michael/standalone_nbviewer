@@ -55,6 +55,29 @@ class NotebookViewer(QWebEngineView):
         super(NotebookViewer, self).show()
 
 
+def main(files):
+    """
+    Routine to spawn multiple windows per file
+    Parameters
+    ----------
+    files : List[str] or str
+    """
+    app = QApplication(sys.argv)
+
+    if isinstance(files, str):
+        widget = NotebookViewer(files)
+        widget.show()
+    else:
+        widgets = []
+        for i, fname in enumerate(files):
+            widgets.append(NotebookViewer(fname))
+            if i > 0:
+                widgets[i - 1].started.connect(widgets[i].show)
+        widgets[0].show()
+
+    sys.exit(app.exec_())
+
+
 if __name__ == '__main__':
 
     if len(sys.argv) <= 1:
@@ -63,11 +86,4 @@ if __name__ == '__main__':
         print('multiple files are possible')
         sys.exit(0)
 
-    app = QApplication(sys.argv)
-    widgets = []
-    for i,fname in enumerate(sys.argv[1:]):
-        widgets.append(NotebookViewer(fname))
-        if i > 0:
-            widgets[i-1].started.connect(widgets[i].show)
-    widgets[0].show()
-    sys.exit(app.exec_())
+    main(files=sys.argv[1:])
