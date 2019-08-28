@@ -1,3 +1,9 @@
+#!/usr/bin/env python3.7
+"""
+Renders jupyter-notebooks files in the default browser
+Can handle multiple files.
+"""
+
 import sys
 import nbformat
 from nbconvert import HTMLExporter
