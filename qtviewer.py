@@ -19,7 +19,7 @@ def notebook_to_html(fname):
     Parameters
     ----------
     fname : str
-        Filename of the jupyter notebook file
+        Filename of the jupyter-notebook file
 
     Returns
     -------
@@ -42,7 +42,7 @@ class NotebookViewer(QWebEngineView):
         Parameters
         ----------
         fname : str
-            Filename of the jupyter notebook file.
+            Filename of the jupyter-notebook file.
         """
         super(NotebookViewer, self).__init__()
 
