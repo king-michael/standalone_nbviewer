@@ -8,7 +8,6 @@ from __future__ import print_function
 import sys
 import os
 import stat
-
 from shutil import copy2
 import site
 from argparse import ArgumentParser
