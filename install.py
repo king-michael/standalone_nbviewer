@@ -7,6 +7,7 @@ from __future__ import print_function
 
 import sys
 import os
+import stat
 from shutil import copy2
 import site
 from argparse import ArgumentParser
@@ -88,9 +89,10 @@ for fname, attrib in files.items():
     fname_exe=os.path.join(path_bin, attrib.get('_output', fname))
     print('  {} -> {}'.format(fname, fname_exe))
     copy2(os.path.join(here, fname), fname_exe)
+    os.chmod(fname_exe, os.stat(fname_exe).st_mode | stat.S_IEXEC) # chmod +x
 
     if install_desktop:
-        fname_desktop = os.path.join(path_share_applications, '{}.desktop'.format(os.path.splitext(fname_exe)[0]))
+        fname_desktop = os.path.join(path_share_applications, '{}.desktop'.format(os.path.splitext(attrib.get('_output', fname))[0]))
         print('  - create desktop file {}'.format(fname_desktop))
         with open(fname_desktop, 'w') as fp:
             fp.write(_template_desktop_file.format(path=fname_exe, **attrib))
